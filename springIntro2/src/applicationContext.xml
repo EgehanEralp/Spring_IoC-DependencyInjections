@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- bean id leri Class ları gösteren referenslardır. -->
+
+	<context:property-placeholder location="values.properties"/> <!-- Constant verileri tuttuğum properties dosyamı bean lerde kullanacağım. -->
+	
+	
+	<bean id="database1" class="springIntro2.MySqlCustomerDal"><!-- database1 bean i isteyene MySqlCustomerDal nesnesini ver -->
+		<property name="connectionPath" value="--MySQL path string--"></property>
+	</bean>
+	<bean id="database2" class="springIntro2.CustomerDAL">
+		<property name="connectionPath" value="--OracleDB path string--"></property>
+	</bean>
+	<bean id="database3" class="springIntro2.MsSqlCustomerDal"> <!-- BİRİ BİZDEN database3 bean'i isterse => ona MsSqlCustomerDal nesnesini ver -->
+		<property name="connectionPath" value="${database.connectionString}"></property>
+	</bean>
+
+	<bean id="service" class="springIntro2.CustomerManager">
+		<constructor-arg ref="database3"/> <!-- Constructor parametresi ICustomerDal == -->
+											<!--yani bu interface den implement olan sınıflardan birinin nesnesi parametre verilmeli -->
+	</bean>
+
+
+</beans>
+
+
+
+
+
